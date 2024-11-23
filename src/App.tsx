@@ -11,29 +11,52 @@ function App() {
   const calculateLove = useCallback(() => {
     setIsAnimating(true);
 
+    const name1 = names.name1.toLowerCase().trim();
+    const name2 = names.name2.toLowerCase().trim();
+    const sortedNames = [name1, name2].sort();
+
     // Special case for Sanjeed and Sulbia, Talbia and Zaid
     if (
-      (names.name1.toLowerCase() === 'sanjeed' &&
-        names.name2.toLowerCase() === 'sulbia') ||
-      (names.name1.toLowerCase() === 'sulbia' &&
-        names.name2.toLowerCase() === 'sanjeed') ||
-      (names.name1.toLowerCase() === 'talbia' &&
-        names.name2.toLowerCase() === 'zaid') ||
-      (names.name1.toLowerCase() === 'zaid' &&
-        names.name2.toLowerCase() === 'talbia')
+      (names.name1.toLowerCase().trim() === 'sanjeed' &&
+        names.name2.toLowerCase().trim() === 'sulbia') ||
+      (names.name1.toLowerCase().trim() === 'sulbia' &&
+        names.name2.toLowerCase().trim() === 'sanjeed') ||
+      (names.name1.toLowerCase().trim() === 'talbia' &&
+        names.name2.toLowerCase().trim() === 'zaid') ||
+      (names.name1.toLowerCase().trim() === 'zaid' &&
+        names.name2.toLowerCase().trim() === 'talbia')
     ) {
       setResult(100);
+      // Track the special case result
+      // @ts-ignore
+      window.gtag('event', 'love_calculation', {
+        names: sortedNames.join('_and_'),
+        name1: name1,
+        name2: name2,
+        result: 100,
+        is_special_case: true
+      });
       return;
     }
 
     // Generate a consistent result for the same pair of names
-    const combinedNames = `${names.name1.toLowerCase()}${names.name2.toLowerCase()}`;
+    const combinedNames = `${names.name1.toLowerCase().trim()}${names.name2.toLowerCase().trim()}`;
     let hash = 0;
     for (let i = 0; i < combinedNames.length; i++) {
       hash = combinedNames.charCodeAt(i) + ((hash << 5) - hash);
     }
     const percentage = Math.abs(hash % 100) + 1;
     setResult(percentage);
+
+    // Track the regular calculation result
+    // @ts-ignore
+    window.gtag('event', 'love_calculation', {
+      names: sortedNames.join('_and_'),
+      name1: name1,
+      name2: name2,
+      result: percentage,
+      is_special_case: false
+    });
   }, [names]);
 
   return (
