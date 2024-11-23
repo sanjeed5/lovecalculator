@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes float {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.animate-float {
+  animation: float linear infinite;
+}
+
+@keyframes burst {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2) rotate(45deg);
+    opacity: 0;
+  }
+}
+
+.animate-burst-0 { animation: burst 0.5s ease-out forwards; }
+.animate-burst-1 { animation: burst 0.5s ease-out forwards; }
+.animate-burst-2 { animation: burst 0.5s ease-out forwards; }
+.animate-burst-3 { animation: burst 0.5s ease-out forwards; }
+.animate-burst-4 { animation: burst 0.5s ease-out forwards; }
+.animate-burst-5 { animation: burst 0.5s ease-out forwards; }
+.animate-burst-6 { animation: burst 0.5s ease-out forwards; }
+.animate-burst-7 { animation: burst 0.5s ease-out forwards; }
